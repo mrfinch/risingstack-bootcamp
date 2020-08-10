@@ -1,19 +1,14 @@
-'use strict'
 const joi = require('joi');
 
 const schema = joi.object({
-  port: joi.number().required().min(3001).max(65555)
-});
+  port: joi.number().required().min(3001).max(65555),
+}).required();
 
 const envVars = process.env;
 const config = {
-  port: envVars.PORT
+  port: envVars.PORT,
 }
 
-const { error, value } = schema.validate(config);
-if (error) {
-  throw new Error(error);
-}
+const envConfig = joi.attempt(config, schema);
 
-
-module.exports = config
+module.exports = envConfig;

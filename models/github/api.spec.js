@@ -1,4 +1,3 @@
-const request = require('super-request');
 const { expect } = require('chai');
 const api = require('./api');
 const nock = require('nock');

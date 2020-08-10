@@ -5,6 +5,7 @@
 const logger = require('winston')
 const semver = require('semver')
 const pkg = require('./package.json')
+const config = require('./config');
 
 // validate Node version requirement
 const runtime = {
@@ -22,8 +23,16 @@ if (!valid) {
 logger.default.transports.console.colorize = true
 logger.default.transports.console.timestamp = true
 logger.default.transports.console.prettyPrint = true
+logger.default.transports.console.prettyPrint = config.environment === 'development'
 
 // start process
 logger.info('Starting web process', { pid: process.pid })
 
-require('./web')
+if (config.processType === 'web') {
+  require('./web')
+} else if (config.processType === 'worker') {
+  // missing
+} else {
+  throw new Error('processType not defined');
+}
+

@@ -18,7 +18,18 @@ async function insert(params) {
 		.returning('*');
 }
 
-function insertOrReplace(params) {}
+function insertOrReplace(params) {
+	const contribution = joi.attempt(params, insertSchema)
+
+	const query = `
+    INSERT INTO :tableName: ("user", repository, line_count)
+      VALUES (:user, :repository, :line_count)
+      ON CONFLICT ("user", repository) DO UPDATE SET line_count = :line_count
+      RETURNING *;
+  `
+
+	return db.raw(query, Object.assign({ tableName }, contribution));
+}
 
 const readSchema = joi.object({
 	user: joi.object({
