@@ -2,19 +2,16 @@
 
 const Koa = require('koa')
 const logger = require('winston')
-const Router = require('koa-router');
+const router = require('./router');
+const middleware = require('./middlewares');
 
 const app = new Koa()
-const router = new Router();
 
-router.get('/hello', (ctx, next) => {
-  ctx.body = 'Hello Node.js!';
-});
+app.use(router.routes()).use(router.allowedMethods())
+    .use(middleware.requestLogger());
 
 app.on('error', (err) => {
   logger.error('Server error', { error: err.message })
 })
-
-app.use(router.routes()).use(router.allowedMethods());
 
 module.exports = app

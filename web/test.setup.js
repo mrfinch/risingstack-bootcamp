@@ -7,6 +7,14 @@ const winston = require('winston')
 
 chai.use(sinonChai)
 
+const user = process.env.PG_USER || process.env.USER || 'root'
+const pw = process.env.PG_PASSWORD || ''
+const db = process.env.PG_DATABASE || 'risingstack_bootcamp'
+process.env.PG_URI = `postgres://${user}:${pw}@localhost:5432/${db}`
+
+// amqp
+process.env.redisUrl = '127.0.0.1:6379';
+
 // logger
 winston.setLevels({ test: 0, error: 1, warn: 2, info: 3, verbose: 4, debug: 5, silly: 6 })
 winston.addColors({

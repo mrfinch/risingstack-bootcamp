@@ -15,8 +15,8 @@ const CHANNELS = {
 	}
 }
 
-const subscriber = new Redis(config.url, { lazyConnect: true, dropBufferSupport: true });
-const publisher = new Redis(config.url, { lazyConnect: true, dropBufferSupport: true });
+const subscriber = new Redis(config.redisUrl, { lazyConnect: true, dropBufferSupport: true });
+const publisher = new Redis(config.redisUrl, { lazyConnect: true, dropBufferSupport: true });
 
 function publishObject(channel, message) {
 	console.log('publish', channel);

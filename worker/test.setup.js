@@ -12,7 +12,7 @@ const db = process.env.PG_DATABASE || 'risingstack_bootcamp'
 process.env.PG_URI = `postgres://${user}:${pw}@localhost:5432/${db}`
 
 // amqp
-process.env.url = '127.0.0.1:6379';
+process.env.redisUrl = '127.0.0.1:6379';
 
 // logger
 winston.setLevels({ test: 0, error: 1, warn: 2, info: 3, verbose: 4, debug: 5, silly: 6 })
